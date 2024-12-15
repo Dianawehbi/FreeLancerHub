@@ -11,7 +11,7 @@ if ($_SESSION['isLoggedin'] == 1) {
         $query = "INSERT INTO `tasksdone`(`id`, `freelancer_id`, `task_id`, `review`) 
         VALUES (null,$freelancerid,$taskid,2)";
         echo $query;
-        if($conn->query($query)){
+        if ($conn->query($query)) {
             header('location:../profiles/logicprofile.php?proid=' . $freelancerid);
         }
     }

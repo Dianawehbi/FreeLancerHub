@@ -68,7 +68,7 @@ CREATE TABLE task (
     FOREIGN KEY (company_id) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE taskdone (
+CREATE TABLE tasksdone (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     freelancer_id INT(11) NOT NULL,
     task_id INT(11) NOT NULL,
