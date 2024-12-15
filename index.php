@@ -1,6 +1,7 @@
 <?php
 // this page is to check if the username and ppassword are founds in the data base 
 // also give the session value = 1 , if he i logged in 
+
 require_once "connection.php";
 
 if (
@@ -22,7 +23,7 @@ if (
         header("location:home.php?id=" . $row['id']);
     } else {
         // you should enter a valid username and password
-        $_SESSION['isLogedin'] = 0;
+        $_SESSION['isLoggedin'] = 0;
     }
 }
 ?>

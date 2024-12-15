@@ -12,7 +12,7 @@ if ($_SESSION['isLoggedin'] == 1) {
         VALUES (null,$freelancerid,$taskid,2)";
         echo $query;
         if($conn->query($query)){
-            header('location:../profiles/logicprofile.php?id=' . $freelancerid);
+            header('location:../profiles/logicprofile.php?proid=' . $freelancerid);
         }
     }
 } else {

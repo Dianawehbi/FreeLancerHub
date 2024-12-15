@@ -143,7 +143,7 @@ if ($_SESSION['isLoggedin'] != 1) {
             $nameParts = explode(' ', $name);
             $firstName = $nameParts[0];
             echo '<div class="job-card position-relative">';
-            echo '<a href="../profiles/logicprofile.php?id=' . $row['company_id'] . '">';
+            echo '<a href="../profiles/logicprofile.php?proid=' . $row['company_id'] . '">';
             echo '<img src="../images/' . $firstName . '.jpg" alt="Company Logo" class="company-logo">';  // Ensure company logo path is correct
             echo '</a>';
             echo '<div class="job-content">';

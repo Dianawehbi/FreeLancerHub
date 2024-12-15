@@ -6,13 +6,13 @@
 session_start();
 
 if ($_SESSION['isLoggedin'] == 1) {
-    if (isset($_GET['id']) && !empty($_GET['id'])) {
+    if (isset($_GET['proid']) && !empty($_GET['proid'])) {
         require_once '../../connection.php';
-        $id = $_GET['id'];
+        $id = $_GET['proid'];
         $query = "SELECT `id`, `name`, `username`, `email`, `phone`, `password`, `country`, `role`, `link`, `description` FROM `user` WHERE id= $id";
         $res = $conn->query($query);
         if ($res->num_rows != 1) {
-            header('location:../../home.php');
+            header('location:../../home.php?=id' . $_SESSION['user_id']);
         } else {
             $row = $res->fetch_assoc();
             // for picture
@@ -126,7 +126,7 @@ if ($_SESSION['isLoggedin'] == 1) {
         $id = $_SESSION['user_id'];
         $query = "UPDATE `user` SET `email`='$email',`phone`='$phone', `description`='$description' WHERE id = $id ";
         $conn->query($query);
-        header('location:minepro.php?id=' . $_SESSION['user_id']);
+        header('location:minepro.php?proid=' . $_SESSION['user_id']);
     }
 } else {
     header('location:../../index.php');

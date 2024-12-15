@@ -9,8 +9,8 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
-                <a class="nav-link active" aria-current="page" href="home.php">Home</a>
-                <a class="nav-link" href="profiles/logicprofile.php?id=<?php echo $_SESSION['user_id']; ?>">Profile</a>
+                <a class="nav-link active" aria-current="page" href="home.php?id=<?= $_SESSION['user_id'] ;?>">Home</a>
+                <a class="nav-link" href="profiles/logicprofile.php?proid=<?php echo $_SESSION['user_id']; ?>">Profile</a>
                 <a class="nav-link" href="Register/logout.php">Log Out</a>
                 <?php
                 if ($_SESSION['role_id'] == 3) {

@@ -16,7 +16,7 @@ if ($_SESSION['isLoggedin'] != 1 && $_SESSION['role_id'] != 3) {
         $query = "INSERT INTO `task`(`id`, `name`, `description`, `rate`, `category_id`, `company_id`, `deadline`)
          VALUES (null,'$name','$description',$rate,$category,$_SESSION[user_id],'$deadline')";
         $conn->query($query);
-        header('location:../home.php');
+        header('location:../home.php?id=' . $_SESSION['user_id']);
     }
 
 ?>

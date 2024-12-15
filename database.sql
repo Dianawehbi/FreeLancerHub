@@ -103,3 +103,24 @@ INSERT INTO user (name, username, email, phone, password, country, role, link, d
 ('Rania Ahmed', 'rania.ahmed', 'rania.ahmed@example.com', '+20-100-234-5678', '123', 'Egypt', 2, 'https://www.rania-ahmed.com', 'UI/UX designer.'),
 ('Tariq Al-Karim', 'tariq.alkarim', 'tariq.alkarim@example.com', '+973-33-123-4567', '123', 'Bahrain', 2, 'https://www.tariq-dev.com', 'Mobile app developer.'),
 ('Zainab Ali', 'zainab.ali', 'zainab.ali@example.com', '+961-71-234-567', '123', 'Bahrain', 2, 'https://www.zainab-portfolio.com', 'Web developer.');
+
+INSERT INTO `task`(`id`, `name`, `description`, `rate`, `category_id`, `company_id`, `deadline`) VALUES
+(NULL, 'Design and Optimize a Relational Database for E-C', 'Create a robust relational database for an e-comme', 1000, 15, 1, '2025-01-20'),
+(NULL, 'Develop a Responsive E-Commerce Website', 'Build a responsive e-commerce website using modern', 2100, 16, 2, '2025-02-15'),
+(NULL, 'Build a Cross-Platform Fitness Tracker App', 'Develop a fitness tracker app compatible with both', 2550, 17, 3, '2025-03-10'),
+(NULL, 'Develop a Machine Learning Model for Customer Segm', 'Design and train a machine learning model to segme', 1950, 18, 4, '2025-01-28'),
+(NULL, 'Migrate On-Premises Infrastructure to AWS Cloud', 'Perform a complete migration of an existing on-pre', 3450, 19, 5, '2025-03-05'),
+(NULL, 'Optimize SQL Queries for High-Traffic Application', 'Analyze and optimize SQL queries for a high-traffi', 850, 20, 6, '2025-01-25'),
+(NULL, 'Design a Scalable Microservices Architecture', 'Create a microservices architecture for a SaaS pla', 3050, 21, 7, '2025-02-10'),
+(NULL, 'Perform Penetration Testing for a Banking Applica', 'Conduct thorough penetration testing on a banking', 4250, 22, 8, '2025-02-25'),
+(NULL, 'Develop a 2D Puzzle Game for Android', 'Design and develop a 2D puzzle game for Android de', 1550, 23, 9, '2025-03-15'),
+(NULL, 'Redesign a Mobile App for Better Usability', 'Redesign the UI/UX of an existing mobile app to im', 1300, 24, 10, '2025-01-30'),
+(NULL, 'Set Up CI/CD Pipeline for a Web Application', 'Configure a CI/CD pipeline for an existing web app', 1850, 24, 11, '2025-02-20'),
+(NULL, 'Redesign a Mobile App for Better Usability', 'Redesign the UI/UX of an existing mobile app to im', 1300, 18, 1, '2025-01-30'),
+(NULL, 'Develop a 2D Puzzle Game for Android', 'Design and develop a 2D puzzle game for Android de', 1550, 20, 2, '2025-03-15'),
+(NULL, 'Perform Penetration Testing for a Banking Applica', 'Conduct thorough penetration testing on a banking', 4250, 19, 3, '2025-02-25'),
+(NULL, 'Design a Scalable Microservices Architecture', 'Create a microservices architecture for a SaaS pla', 3050, 17, 4, '2025-02-10'),
+(NULL, 'Optimize SQL Queries for High-Traffic Application', 'Analyze and optimize SQL queries for a high-traffi', 850, 16, 5, '2025-01-25'),
+(NULL, 'Migrate On-Premises Infrastructure to AWS Cloud', 'Perform a complete migration of an existing on-pre', 3450, 15, 6, '2025-03-05'),
+(NULL, 'Develop a Machine Learning Model for Customer Segm', 'Design and train a machine learning model to segme', 1950, 21, 7, '2025-01-28'),
+(NULL, 'Build a Cross-Platform Fitness Tracker App', 'Develop a fitness tracker app compatible with both', 2550, 22, 8, '2025-03-10');
