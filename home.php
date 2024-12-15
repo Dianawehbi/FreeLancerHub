@@ -13,71 +13,17 @@ if ($_SESSION['isLoggedin'] != 1) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
     <link rel="stylesheet" href="style.css">
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top">
-        <div class="container-fluid">
-
-            <a class="navbar-brand" href="#">FreelanceHub</a>
-
-            <button class="navbar-toggler" type="button" id="navbarToggleBtn" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link active" aria-current="page" href="home.php">Home</a>
-                    <a class="nav-link" href="profiles/logicprofile.php?id=<?php echo $_SESSION['user_id']; ?>">Profile</a>
-                    <a class="nav-link" href="Register/logout.php">Log Out</a>
-                    <?php
-                    if ($_SESSION['role_id'] == 3) {
-                        $id  = $_SESSION['user_id'];
-                        echo "<a class='nav-link' href='Task/postTask.php?id=$id'>Post</a>";
-                    }
-                    ?>
-                    <a class="nav-link" href="Task/tasks.php?category=0">Tasks </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var navbarToggleBtn = document.getElementById('navbarToggleBtn');
-            var navbarCollapse = document.getElementById('navbarNavAltMarkup');
-
-            // Toggle class for navbar-collapse on button click
-            navbarToggleBtn.addEventListener('click', function() {
-                navbarCollapse.classList.toggle('show');
-            });
-        });
-    </script>
 
     <?php
-    require_once 'index_components/imageSlide.php';
-    ?>
-    <!-- category -->
-    <div class="container text-center">
-        <h3>Browse Tasks By Categories</h3>
-        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-            <?php
-            $sql = "SELECT * FROM `categories` WHERE 1";
-            $res = $conn->query($sql);
-            $category = 0;
-            echo " <div class='col'>";
-            echo "<div class='p-3'>";
-            echo '<a href="Task/tasks.php?category=' . $category . '"><button class="category-button">ALL </button></a>';
-            echo "</div></div>";
-            while ($row = $res->fetch_assoc()) {
-                $category = $row['id'];
-                echo " <div class='col'>";
-                echo "<div class='p-3'>";
-                echo '<a href="Task/tasks.php?category=' . $category . '"><button class="category-button">' . $row['name'] . '</button></a>';
-                echo "</div></div>";
-            }
-            ?>
+    // Navbar 
+    require_once 'index_components/navbar.php';
 
-        </div>
-    </div>
+    // slide
+    require_once 'index_components/imageSlide.php';
+
+    // category
+    require_once 'index_components/categories.php';
+    ?>
 
     <!-- tasks -->
     <link rel="stylesheet" href="task.css">
