@@ -6,7 +6,7 @@ require_once "connection.php";
 
 if (
     isset($_POST['username']) && !empty($_POST['username'])
-    && isset($_POST['username']) && !empty($_POST['username'])
+    && isset($_POST['password']) && !empty($_POST['password'])
 ) {
     $username = $_POST['username'];
     $pass = $_POST['password'];
