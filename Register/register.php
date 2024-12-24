@@ -15,7 +15,7 @@ if (
     extract($_POST);
     // check : username , email , phone 
     $query = "SELECT * FROM `user` WHERE 1";
-    $res = $conn->query($query);
+    $res = $conn->query(query: $query);
 
     $_SESSION['error'] = false;
     echo "<script>
@@ -39,12 +39,17 @@ if (
     }
     if (!$_SESSION['error']) {
         if ($password == $confirm_pass) {
+            //hash password
+            $password = md5($password);
             $role;
             if ($register_as == 'freelancer') {
                 $role = 2;
             } else {
                 $role = 3;
             }
+            // check if image exist or no 
+            
+
             $sql = "INSERT INTO `user`(`id`, `name`, `username`, `email`, `phone`, `password`, `country`, `role`, `link`,`description` ) 
             VALUES (null,'$name','$username','$email','$phone','$password','$country',$role, '$link', '$description')";
 
@@ -130,6 +135,11 @@ if (
                     <div class="mb-3">
                         <label for="portfolio" class="form-label">description</label>
                         <input type="text" class="form-control" id="portfolio" name="description" placeholder="Description">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="portfolio" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="portfolio" name="profile_pic" >
                     </div>
 
                     <div class="row g-3">
