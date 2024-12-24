@@ -23,6 +23,7 @@ CREATE TABLE user (
     role INT(11) NOT NULL,
     link VARCHAR(500) NOT NULL,
     description TEXT NOT NULL,
+    profilepic  VARCHAR(100),
     FOREIGN KEY (role) REFERENCES role(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
