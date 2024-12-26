@@ -3,7 +3,6 @@
 <link rel="stylesheet" href="task.css">
 <?php
 session_start();
-require_once '../header_footer/nav.php';
 ?>
 
 <style>
@@ -94,75 +93,47 @@ require_once '../header_footer/nav.php';
     }
 </style>
 
+
 <?php
 if ($_SESSION['isLoggedin'] != 1) {
     header("location:index.php");
 } else {
+    require_once '../header_footer/nav.php';
     require_once '../connection.php';
     if (isset($_GET['category'])) {
         $category = $_GET['category'];
 
-        if ($category == '0') {
-            $taskquery = "SELECT 
-            task.name AS task_name,
-            task.description AS des,
-            task.rate,
-            task.category_id,
-            task.company_id as  company_id,
-            task.deadline,
-            user.country,
-            task.id as task_id,
-            user.name AS company_name,
-            categories.name as cate_name
-        FROM task 
-        JOIN user ON user.id = task.company_id 
-        JOIN categories ON task.category_id = categories.id Where 1";
-        } else {
-            $taskquery = "SELECT 
-            task.name AS task_name,
-            task.description AS des,
-            task.rate,
-            task.company_id as  company_id,
-            task.category_id,
-            task.deadline,
-            user.country,
-            task.id as task_id,
-            user.name AS company_name,
-            categories.name as cate_name
-        FROM task 
-        JOIN user ON user.id = task.company_id 
-        JOIN categories ON task.category_id = categories.id 
-        WHERE task.category_id = $category;";
-        }
-
-        $tasks = $conn->query($taskquery);
-        echo '<div class="container">';
-
-        while ($row = $tasks->fetch_assoc()) {
-            $name = $row['company_name'];
-            $nameParts = explode(' ', $name);
-            $firstName = $nameParts[0];
-            echo '<div class="job-card position-relative">';
-            echo '<a href="../profiles/logicprofile.php?proid=' . $row['company_id'] . '">';
-            echo '<img src="../images/' . $firstName . '.jpg" alt="Company Logo" class="company-logo">';  // Ensure company logo path is correct
-            echo '</a>';
-            echo '<div class="job-content">';
-            echo '<div class="job-title">' . $row['task_name'] . '</div>';
-            echo '<div class="company-name">' . $row['company_name'] . '</div>';
-            echo '<div class="description">' . $row['des'] . '</div>';
-            echo '<div class="rate">$' . $row['rate'] . '/Task</div>';
-            echo '<div class="deadline">Deadline: ' . $row['deadline'] . '</div>';
-            if ($_SESSION['role_id'] == 2) {
-
-                echo '<a href="../connect/connect.php?taskid=' . $row['task_id'] . '" class="apply-btn">Connect</a>';  // Connect button
+?>
+        <nav class="navbar navbar-light bg-light" style="margin-top: 20px; padding: 10px;">
+            <div class="container d-flex justify-content-center">
+                <form class="d-flex" style="max-width: 500px; width: 100%;">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onkeyup="SearchTask(this.value,<?= $category; ?> )" style="border-radius: 20px;">
+                </form>
+            </div>
+        </nav>
+        <script>
+            function SearchTask(value, category_id) {
+                let xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.status == 200 && this.readyState == 4) {
+                        document.getElementById("tasks_container").innerHTML = this.responseText;
+                    } else {
+                        document.getElementById("tasks_container").innerHTML = "No Data Found";
+                    }
+                }
+                xhttp.open("GET", "search.php?category=" + category_id + "&text=" + value, true);
+                xhttp.send();
             }
-            echo '</div>';
-            echo '</div>';
-        }
+            window.onload = function() {
+                SearchTask('', <?= $category; ?>); // Empty search to get all tasks
+            }
+        </script>
 
-        echo '</div>';
+        <div id="tasks_container">
+
+        </div>
+<?php
     }
+    require_once '../header_footer/footer.php';
 }
-
-require_once '../header_footer/footer.php';
 ?>
