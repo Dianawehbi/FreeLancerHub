@@ -9,7 +9,7 @@ if (
     && isset($_POST['password']) && !empty($_POST['password'])
 ) {
     $username = $_POST['username'];
-    $pass = $_POST['password'];
+    $pass = md5($_POST['password']);
 
     $query = "SELECT * FROM user WHERE username = '$username' AND password = '$pass'";
     $result = $conn->query($query);
@@ -18,7 +18,6 @@ if (
         session_start();
         $_SESSION['isLoggedin'] = 1;
         $_SESSION['user_id'] = $row['id'];
-        $_SESSION['password'] = $pass;
         $_SESSION['role_id'] =  $row['role'];
         header("location:home.php?id=" . $row['id']);
     } else {
