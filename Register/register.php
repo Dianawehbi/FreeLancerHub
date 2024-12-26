@@ -13,7 +13,7 @@ if (
     && isset($_POST['link']) && !empty($_POST['link'])
 ) {
     extract($_POST);
-    // check : username , email , phone 
+    // check : username , email , phone ...
     $query = "SELECT * FROM `user` WHERE 1";
     $res = $conn->query(query: $query);
 
@@ -48,12 +48,30 @@ if (
                 $role = 3;
             }
             // check if image exist or no 
-            
+            $image = 'default';
+            if (!empty($_FILES['profile_pic']['name'])) {
+                $ppict = $_FILES['profile_pic']['name'];
+                $extension = pathinfo($ppict, PATHINFO_EXTENSION);
+                if ($extension != 'png' && $extension != 'jpg' && $extension != 'jpeg') {
+                    die('please enter an image !!!');
+                }
 
-            $sql = "INSERT INTO `user`(`id`, `name`, `username`, `email`, `phone`, `password`, `country`, `role`, `link`,`description` ) 
-            VALUES (null,'$name','$username','$email','$phone','$password','$country',$role, '$link', '$description')";
+                if ($_FILES['profile_pic']['size'] > 3 *1024 * 1024) {
+                    die('image should be less than 3 MB');
+                }
 
-            if ($conn->query($sql)) {
+                if (!is_dir( '../images')) {
+                    mkdir('../images');
+                }
+
+                move_uploaded_file($_FILES['profile_pic']['tmp_name'], '../images/' . $ppict);
+                $image = $ppict;
+            }
+
+            $sql = "INSERT INTO `user`(`id`, `name`, `username`, `email`, `phone`, `password`, `country`, `role`, `link`,`description`, `profilepic`) 
+            VALUES (null,'$name','$username','$email','$phone','$password','$country',$role, '$link', '$description', '$image')";
+            echo $sql;
+            if ($conn->query(query: $sql)) {
                 $_SESSION['start'] = 1;
                 header('location:../index.php');
             }
@@ -71,13 +89,12 @@ if (
             <div class="card-header bg-primary text-white text-center">
                 <h3>Register Here</h3>
             </div>
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label for="firstName" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="firstName" name="name" placeholder="Enter your first name" required>
-                        </div>
+
+                    <div class="mb-3 mt-3">
+                        <label for="firstName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="firstName" onkeyup="CleanStringInput(this)" name="name" placeholder="Enter your first name" required>
                     </div>
 
                     <div class="mb-3 mt-3">
@@ -104,7 +121,7 @@ if (
 
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username" required>
+                        <input type="text" class="form-control" id="username" name="username" onkeyup="CleanStringInput(this)" placeholder="Choose a username" required>
                     </div>
                     <div class="mb-3">
                         <label for="portfolio" class="form-label">Link(portfolio/website)</label>
@@ -134,12 +151,12 @@ if (
                     </div>
                     <div class="mb-3">
                         <label for="portfolio" class="form-label">description</label>
-                        <input type="text" class="form-control" id="portfolio" name="description" placeholder="Description">
+                        <input type="text" class="form-control" id="portfolio" name="description" required pattern="^[A-Za-z0-9 `-_]+$" placeholder="Description">
                     </div>
 
                     <div class="mb-3">
                         <label for="portfolio" class="form-label">Profile Picture</label>
-                        <input type="file" class="form-control" id="portfolio" name="profile_pic" >
+                        <input type="file" class="form-control" id="portfolio" name="profile_pic">
                     </div>
 
                     <div class="row g-3">
@@ -170,5 +187,19 @@ if (
         </div>
     </div>
 </body>
+
+<script>
+    function CleanStringInput(inputElement) {
+        let value = inputElement.value;
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                inputElement.value = this.responseText;
+            }
+        }
+        xhttp.open("GET", 'specialcharacter.php?value=' + value, true);
+        xhttp.send();
+    }
+</script>
 
 </html>
