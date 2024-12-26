@@ -70,7 +70,6 @@ if (
 
             $sql = "INSERT INTO `user`(`id`, `name`, `username`, `email`, `phone`, `password`, `country`, `role`, `link`,`description`, `profilepic`) 
             VALUES (null,'$name','$username','$email','$phone','$password','$country',$role, '$link', '$description', '$image')";
-            echo $sql;
             if ($conn->query(query: $sql)) {
                 $_SESSION['start'] = 1;
                 header('location:../index.php');
