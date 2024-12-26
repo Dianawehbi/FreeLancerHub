@@ -10,16 +10,13 @@ if ($_SESSION['isLoggedin'] == 1) {
     if (isset($_GET['proid']) && !empty($_GET['proid'])) {
         require_once '../../connection.php';
         $id = $_GET['proid'];
-        $query = "SELECT `id`, `name`, `username`, `email`, `phone`, `password`, `country`, `role`, `link`, `description` FROM `user` WHERE id= $id";
+        $query = "SELECT `id`, `name`, `username`, `email`, `phone`, `password`, `country`, `role`, `link`, `description`,`profilepic` FROM `user` WHERE id= $id";
         $res = $conn->query($query);
         if ($res->num_rows != 1) {
-            header('location:../../home.php?id='. $_SESSION['user_id'] );
+            header('location:../../home.php?id=' . $_SESSION['user_id']);
         } else {
             $row = $res->fetch_assoc();
-            // for picture
-            $name = $row['name'];
-            $nameParts = explode(' ', $name);
-            $firstName = $nameParts[0];
+
 
             $taskquery = "SELECT task.name as name, task.description as des, task.rate, task.category_id, task.deadline , user.name 
             FROM `task` JOIN `user` ON user.id = task.company_id WHERE task.company_id = $_SESSION[user_id]";
@@ -33,8 +30,8 @@ if ($_SESSION['isLoggedin'] == 1) {
             <div class="profile-header position-relative" style="height: 250px;">
                 <!-- Profile Picture Section -->
                 <div class="position-absolute top-50 start-50 translate-middle text-center edit-section">
-                    <label for="profilePictureInput">
-                        <img src="../images/<?= $firstName; ?>.jpg" alt="Profile Picture" class="profile-picture">
+                    <label for="profilePictureInput" id="label_img">
+                        <img src="../../images/<?= $row['profilepic']; ?>" alt="Profile Picture" class="profile-picture">
                     </label>
                 </div>
 
@@ -44,6 +41,42 @@ if ($_SESSION['isLoggedin'] == 1) {
                     <h2 class="mt-4" id="fullName"><?= $row['name']; ?></h2>
                     <p class="mb-1 text-light"><i class="bi bi-geo-alt"></i> <span id="country"><?= $row['country']; ?></span></p>
                 </div>
+            </div>
+
+            <div class="profile-content mt-4">
+                <button onclick="changePic()" class="btn btn-primary m-sm-2 m-md-3">Change picture</button>
+                <div id="picchange">
+
+                </div>
+
+                <script>
+                    function changePic() {
+                        let code = "<form id='picform' enctype='multipart/form-dat' >";
+                        code  += "<input type='file' class='form-control' id='portfolio' name='profile_pic'>";
+                        code += "<button type='submit' onclick='change()' class='btn btn-primary m-sm-2 m-md-3' > Change </button> </form>";
+                        document.getElementById("picchange").innerHTML = code;
+                    }
+
+                    function change(){
+                        var form =document.getElementById("picform")
+                        var formData = new FormData(form);
+
+                        let xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function(){
+                            if(this.status == 200 && this.readyState == 4){
+                                // done and upate the photo
+                                document.getElementById("picchange").innerHTML = "Done !";
+                                let source = this.responseText;
+                                $_SESSION['profile_pic'] =source;
+                                document.getElementById("label_img").innerHTML = "<img src='../../images/"+source+"' alt='Profile Picture' class='profile-picture'>";
+                            }else{
+                                document.getElementById("picchange").innerHTML = "loading... !";
+                            }
+                        }
+                        xhttp.open("POST", "../changeprofile.php", true);
+                        xhttp.send(formData);
+                    }
+                </script>
             </div>
 
 

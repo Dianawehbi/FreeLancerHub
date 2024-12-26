@@ -9,16 +9,13 @@ if ($_SESSION['isLoggedin'] == 1) {
     if (isset($_GET['proid']) && !empty($_GET['proid'])) {
         require_once '../../connection.php';
         $id = $_GET['proid'];
-        $query = "SELECT `id`, `name`, `username`, `email`, `phone`, `password`, `country`, `role`, `link`, `description` FROM `user` WHERE id= $id";
+        $query = "SELECT `id`, `name`, `username`, `email`, `phone`, `password`, `country`, `role`, `link`, `description`, `profilepic` FROM `user` WHERE id= $id";
         $res = $conn->query($query);
         if ($res->num_rows != 1) {
             header('location:../../home.php?=id' . $_SESSION['user_id']);
         } else {
             $row = $res->fetch_assoc();
             // for picture
-            $name = $row['name'];
-            $nameParts = explode(' ', $name);
-            $firstName = $nameParts[0];
 
             $taskquery = "SELECT task.name as name, task.description as des, task.rate, task.category_id, task.deadline , user.name 
             FROM `task` JOIN `user` ON user.id = task.company_id WHERE task.company_id = $_SESSION[user_id]";
@@ -34,7 +31,7 @@ if ($_SESSION['isLoggedin'] == 1) {
                 <!-- Profile Picture Section -->
                 <div class="position-absolute top-50 start-50 translate-middle text-center edit-section">
                     <label for="profilePictureInput">
-                        <img src="../images/<?= $firstName; ?>.jpg" alt="Profile Picture" class="profile-picture">
+                    <img src="../../images/<?= $row['profilepic']; ?>" alt="Profile Picture" class="account-picture" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
                     </label>
                 </div>
 
