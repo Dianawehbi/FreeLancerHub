@@ -124,8 +124,9 @@ if ($_SESSION['isLoggedin'] != 1) {
                 <h3>Tasks</h3>
                 <div class="index_tasks_row">
                     <?php
-                    $taskquery = "SELECT task.id as task_id,  task.company_id as company_id, task.name as task_name, task.description as des, task.rate, task.category_id, task.deadline , user.name as company_name
-                     FROM `task` JOIN `user` ON user.id = task.company_id";
+                    $taskquery = "SELECT task.id as task_id,  task.company_id as company_id, task.name as task_name, task.description as des, task.rate, 
+                    task.category_id, task.deadline , user.name as company_name , user.profilepic as ppic
+                    FROM `task` JOIN `user` ON user.id = task.company_id";
                     $tasks = $conn->query($taskquery);
 
                     $i = 0;
@@ -136,10 +137,10 @@ if ($_SESSION['isLoggedin'] != 1) {
                             $firstName = $nameParts[0];
                             echo ' <div class="index_tasks_col_sm_4">';
                             echo ' <div class="index_tasks_card">';
-                            echo '<a href="profiles/logicprofile.php?proid=' . $row0['company_id'] . ' "></a>';  // Ensure company logo path is correct
                             echo '<div class="index_tasks_card_body">';
+                            echo '<a href="profiles/logicprofile.php?proid=' . $row0['company_id'] . ' " style="text-decoration: none;">';  // Ensure company logo path is correct
                             echo "<h5 class='index_tasks_card_title'>" . $row0['task_name'] . "</h5>";
-                            echo "<p class='index_tasks_card_text'>" . $row0['des'] . "</p>";
+                            echo "<p class='index_tasks_card_text'>" . $row0['des'] . "</p></a>";
                             echo '<p class="index_tasks_card_rate">Rate: $' . number_format($row0['rate'], 2)  . ' per task</p>';
                             echo '<p class="index_tasks_card_deadline">Deadline: ' . $row0['deadline'] . '</p>';
                             if ($_SESSION['role_id'] == 2) {
@@ -171,7 +172,7 @@ if ($_SESSION['isLoggedin'] != 1) {
 
                     while ($row2 = $resfree->fetch_assoc()) {
                         echo '<div class="scroll-item"><div class="card">';
-                        echo '<a href="#" class="d-block"><img src="images/slideimg1.jpg" class="card-img-top" alt="Freelancer Image"> </a>';
+                        echo '<a href="#" class="d-block"><img src="images/' . $row2['profilepic'] . '" class="card-img-top" alt="Freelancer Image"> </a>';
                         echo '<div class="card-body">';
                         echo '<h5 class="card-header">' . $row2['name'] . '</h5>';
                         echo '<p class="card-text">' . $row2['description'] . '</p>';
