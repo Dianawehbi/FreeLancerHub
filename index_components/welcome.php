@@ -58,9 +58,9 @@
         <div class="center-div">
             <div class="row w-100 content-box">
                 <!-- Video on the left -->
-                <div class="col-md-6 video-container">
-                    <video autoplay loop muted>
-                        <source src="images/vid.webm" type="video/webm">
+                <div class="col-md-6 video-container" id="video-container">
+                    <video autoplay loop muted style="width: 100%; height: auto;">
+                        <source src="https://www.shutterstock.com/shutterstock/videos/1032101564/preview/stock-footage-smart-city-and-communication-network-concept.webm" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
                 </div>
